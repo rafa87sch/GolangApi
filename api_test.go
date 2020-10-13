@@ -29,7 +29,7 @@ func TestCreateEntryEncrypt(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
-
+	//checking the length of the encrypt
 	if err := Process(rr.Body.String()); err != nil {
 		t.Errorf("The encrypt is not working since the length is not matching %v", err)
 	}
@@ -50,6 +50,7 @@ func TestCreateEntryDecrypt(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
+	//checking the decrypt funcion with 123
 	expected := `"123"`
 	if strings.TrimRight(rr.Body.String(), "\n") != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",

@@ -9,14 +9,14 @@ go run main.go
 example
 /api/encrypt
 {
-    "password":"123"
+    "Password":"123"
 }
-
-/api/decrypt
+#will show the a string as answer
 /api/decrypt
 {
-    "password":"4521ef5e25909739a43938d60064ebf6159e3ab90183d9c5d859435f599cf4"
+    "Password":"4521ef5e25909739a43938d60064ebf6159e3ab90183d9c5d859435f599cf4"
 }
+#will show the Password as string
 
 #run the test
 go test -v
