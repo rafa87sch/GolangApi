@@ -55,7 +55,7 @@ func encrypt(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//encrypt the information with the key that should be on the .env file but I have to delivery on time
-	ciphertext := encryptP(newPost.Password, "a50ddcb14f5ea66f40acd1dc30b022c0baf8ae7c9a1d0407e3682c83a39b41b9")
+	ciphertext := encryptMethod(newPost.Password, "a50ddcb14f5ea66f40acd1dc30b022c0baf8ae7c9a1d0407e3682c83a39b41b9")
 	fmt.Printf("encrypted : %s\n", ciphertext)
 	posts := &ciphertext
 	w.Header().Set("Content-Type", "application/json")
@@ -86,14 +86,14 @@ func decrypt(w http.ResponseWriter, r *http.Request) {
 	//decoding to take the value from json
 	json.NewDecoder(r.Body).Decode(&newPost)
 	//sending  a key number I will put on a .env to get but for get the delivery
-	decrypted := decryptP(newPost.Password, "a50ddcb14f5ea66f40acd1dc30b022c0baf8ae7c9a1d0407e3682c83a39b41b9")
+	decrypted := decryptMethod(newPost.Password, "a50ddcb14f5ea66f40acd1dc30b022c0baf8ae7c9a1d0407e3682c83a39b41b9")
 	fmt.Printf("decrypted : %s\n", decrypted)
 	posts := decrypted
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(posts)
 }
 
-func decryptP(encryptedString string, keyString string) (decryptedString string) {
+func decryptMethod(encryptedString string, keyString string) (decryptedString string) {
 
 	key, _ := hex.DecodeString(keyString)
 	enc, _ := hex.DecodeString(encryptedString)
@@ -125,7 +125,7 @@ func decryptP(encryptedString string, keyString string) (decryptedString string)
 	return fmt.Sprintf("%s", plaintext)
 }
 
-func encryptP(stringToEncrypt string, keyString string) (encryptedString string) {
+func encryptMethod(stringToEncrypt string, keyString string) (encryptedString string) {
 
 	//Since the key is in string, we need to convert decode it to bytes
 	key, _ := hex.DecodeString(keyString)
