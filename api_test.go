@@ -58,6 +58,25 @@ func TestCreateEntryDecrypt(t *testing.T) {
 	}
 }
 
+func Test_format(t *testing.T) {
+	var jsonStr = []byte(`{"Password":""}`)
+
+	req, err := http.NewRequest("POST", "/api/encrypt", bytes.NewBuffer(jsonStr))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(decrypt)
+	handler.ServeHTTP(rr, req)
+	//checking the decrypt funcion with 123
+	expected := `The format is not correct`
+	if strings.TrimRight(rr.Body.String(), "\n") != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+}
+
 //taking the len from the encry
 func Process(s string) error {
 	if len(s) != limit {
